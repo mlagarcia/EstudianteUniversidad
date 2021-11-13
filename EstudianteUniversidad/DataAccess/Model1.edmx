@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="PK_Estudiante" />
+          </Key>
+          <Property Name="PK_Estudiante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaDeNac" Type="date" />
+          <Property Name="sexo" Type="nvarchar" MaxLength="25" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Universidad">
+          <Key>
+            <PropertyRef Name="PK_Universidad" />
+          </Key>
+          <Property Name="PK_Universidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pais" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AnioFundacion" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UniversidadEstudiante">
+          <Key>
+            <PropertyRef Name="PK_UniversidadEstudiante" />
+          </Key>
+          <Property Name="PK_UniversidadEstudiante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_Universidad" Type="int" />
+          <Property Name="FK_Estudiante" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Universid__FK_Es__3C69FB99">
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="0..1" />
+          <End Role="UniversidadEstudiante" Type="Self.UniversidadEstudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="PK_Estudiante" />
+            </Principal>
+            <Dependent Role="UniversidadEstudiante">
+              <PropertyRef Name="FK_Estudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Universid__FK_Un__3B75D760">
+          <End Role="Universidad" Type="Self.Universidad" Multiplicity="0..1" />
+          <End Role="UniversidadEstudiante" Type="Self.UniversidadEstudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Universidad">
+              <PropertyRef Name="PK_Universidad" />
+            </Principal>
+            <Dependent Role="UniversidadEstudiante">
+              <PropertyRef Name="FK_Universidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DataModelStoreContainer">
+          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Universidad" EntityType="Self.Universidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UniversidadEstudiante" EntityType="Self.UniversidadEstudiante" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Universid__FK_Es__3C69FB99" Association="Self.FK__Universid__FK_Es__3C69FB99">
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="UniversidadEstudiante" EntitySet="UniversidadEstudiante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Universid__FK_Un__3B75D760" Association="Self.FK__Universid__FK_Un__3B75D760">
+            <End Role="Universidad" EntitySet="Universidad" />
+            <End Role="UniversidadEstudiante" EntitySet="UniversidadEstudiante" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="PK_Estudiante" />
+          </Key>
+          <Property Name="PK_Estudiante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaDeNac" Type="DateTime" Precision="0" />
+          <Property Name="sexo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UniversidadEstudiante" Relationship="Self.FK__Universid__FK_Es__3C69FB99" FromRole="Estudiante" ToRole="UniversidadEstudiante" />
+        </EntityType>
+        <EntityType Name="Universidad">
+          <Key>
+            <PropertyRef Name="PK_Universidad" />
+          </Key>
+          <Property Name="PK_Universidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pais" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AnioFundacion" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UniversidadEstudiante" Relationship="Self.FK__Universid__FK_Un__3B75D760" FromRole="Universidad" ToRole="UniversidadEstudiante" />
+        </EntityType>
+        <EntityType Name="UniversidadEstudiante">
+          <Key>
+            <PropertyRef Name="PK_UniversidadEstudiante" />
+          </Key>
+          <Property Name="PK_UniversidadEstudiante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_Universidad" Type="Int32" />
+          <Property Name="FK_Estudiante" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Estudiante" Relationship="Self.FK__Universid__FK_Es__3C69FB99" FromRole="UniversidadEstudiante" ToRole="Estudiante" />
+          <NavigationProperty Name="Universidad" Relationship="Self.FK__Universid__FK_Un__3B75D760" FromRole="UniversidadEstudiante" ToRole="Universidad" />
+        </EntityType>
+        <Association Name="FK__Universid__FK_Es__3C69FB99">
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="0..1" />
+          <End Role="UniversidadEstudiante" Type="Self.UniversidadEstudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="PK_Estudiante" />
+            </Principal>
+            <Dependent Role="UniversidadEstudiante">
+              <PropertyRef Name="FK_Estudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Universid__FK_Un__3B75D760">
+          <End Role="Universidad" Type="Self.Universidad" Multiplicity="0..1" />
+          <End Role="UniversidadEstudiante" Type="Self.UniversidadEstudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Universidad">
+              <PropertyRef Name="PK_Universidad" />
+            </Principal>
+            <Dependent Role="UniversidadEstudiante">
+              <PropertyRef Name="FK_Universidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDUniversidadEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" />
+          <EntitySet Name="Universidad" EntityType="Self.Universidad" />
+          <EntitySet Name="UniversidadEstudiante" EntityType="Self.UniversidadEstudiante" />
+          <AssociationSet Name="FK__Universid__FK_Es__3C69FB99" Association="Self.FK__Universid__FK_Es__3C69FB99">
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="UniversidadEstudiante" EntitySet="UniversidadEstudiante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Universid__FK_Un__3B75D760" Association="Self.FK__Universid__FK_Un__3B75D760">
+            <End Role="Universidad" EntitySet="Universidad" />
+            <End Role="UniversidadEstudiante" EntitySet="UniversidadEstudiante" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DataModelStoreContainer" CdmEntityContainer="BDUniversidadEntities">
+          <EntitySetMapping Name="Estudiante">
+            <EntityTypeMapping TypeName="DataModel.Estudiante">
+              <MappingFragment StoreEntitySet="Estudiante">
+                <ScalarProperty Name="PK_Estudiante" ColumnName="PK_Estudiante" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="FechaDeNac" ColumnName="FechaDeNac" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Universidad">
+            <EntityTypeMapping TypeName="DataModel.Universidad">
+              <MappingFragment StoreEntitySet="Universidad">
+                <ScalarProperty Name="PK_Universidad" ColumnName="PK_Universidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="AnioFundacion" ColumnName="AnioFundacion" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UniversidadEstudiante">
+            <EntityTypeMapping TypeName="DataModel.UniversidadEstudiante">
+              <MappingFragment StoreEntitySet="UniversidadEstudiante">
+                <ScalarProperty Name="PK_UniversidadEstudiante" ColumnName="PK_UniversidadEstudiante" />
+                <ScalarProperty Name="FK_Universidad" ColumnName="FK_Universidad" />
+                <ScalarProperty Name="FK_Estudiante" ColumnName="FK_Estudiante" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
